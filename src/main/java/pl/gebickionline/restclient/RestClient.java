@@ -1,17 +1,14 @@
-package pl.gebickionline.httpclient;
+package pl.gebickionline.restclient;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.*;
 
-/**
- * Created by £ukasz on 2015-10-16.
- */
 public class RestClient {
     public static final String CHARSET_NAME = "UTF-8";
     private final HttpRequestBase request;
@@ -19,6 +16,7 @@ public class RestClient {
 
     private RestClient(HttpRequestBase request) {
         this.request = request;
+        this.request.addHeader("accept", "text/plain");
     }
 
     public static RestClient put(String targetURL) {
@@ -53,12 +51,18 @@ public class RestClient {
     }
 
     public Response send() {
-        System.out.printf("Request to %s\n", request.getURI().toString());
         HttpResponse response = executeRequest();
-        System.out.println(response.getStatusLine().getStatusCode());
+        int statusCode = response.getStatusLine().getStatusCode();
+        byte[] responseBody = responseBodyOf(response.getEntity());
+        return new ResponseImpl(statusCode, responseBody);
+    }
 
-        return new Response() {
-        };
+    private byte[] responseBodyOf(HttpEntity entity) {
+        try {
+            return EntityUtils.toByteArray(entity);
+        } catch (IOException e) {
+            throw new ResponseConversionException(e);
+        }
     }
 
     private HttpResponse executeRequest() {
@@ -75,6 +79,12 @@ public class RestClient {
 
     private class ExecuteRequestException extends RuntimeException {
         public ExecuteRequestException(Exception e) {
+            super(e);
+        }
+    }
+
+    private class ResponseConversionException extends RuntimeException {
+        public ResponseConversionException(Exception e) {
             super(e);
         }
     }
