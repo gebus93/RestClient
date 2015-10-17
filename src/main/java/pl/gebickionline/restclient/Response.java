@@ -4,4 +4,8 @@ public interface Response {
     int statusCode();
 
     String asString();
+
+    byte[] asByteArray();
+
+    ObjectNode asJsonObject();
 }

@@ -23,4 +23,14 @@ class ResponseImpl implements Response {
                 ? ""
                 : new String(responseBody, Charset.forName(CHARSET_NAME));
     }
+
+    @Override
+    public byte[] asByteArray() {
+        return responseBody;
+    }
+
+    @Override
+    public ObjectNode asJsonObject() {
+        return new JsonObjectNode(asString());
+    }
 }
