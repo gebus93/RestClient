@@ -7,7 +7,6 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -20,7 +19,7 @@ public class RestClient {
     private RestClient(HttpRequestBase request) {
         this.request = request;
         this.headers = new HashMap<>();
-        this.headers.put("accept", "text/plain");
+        this.headers.put("accept", "*/*");
     }
 
     public static RestClient put(String targetURL) {
@@ -62,9 +61,11 @@ public class RestClient {
     }
 
     private byte[] responseBodyOf(HttpEntity entity) {
+        if (entity == null)
+            return null;
         try {
             return EntityUtils.toByteArray(entity);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ResponseConversionException(e);
         }
     }
@@ -77,7 +78,7 @@ public class RestClient {
             addBodyToRequest();
         try {
             return httpClient().execute(request);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ExecuteRequestException(e);
         }
     }
@@ -91,15 +92,4 @@ public class RestClient {
         return HttpClientBuilder.create().build();
     }
 
-    private class ExecuteRequestException extends RuntimeException {
-        public ExecuteRequestException(Exception e) {
-            super(e);
-        }
-    }
-
-    private class ResponseConversionException extends RuntimeException {
-        public ResponseConversionException(Exception e) {
-            super(e);
-        }
-    }
 }
