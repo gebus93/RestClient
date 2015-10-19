@@ -19,7 +19,7 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void whenFieldIsString_returnsString() throws Exception {
+    public void givenStringValue_when_returnsString() throws Exception {
         String jsonString = new JSONObject()
                 .put("fieldName", "value")
                 .toString();
@@ -41,9 +41,88 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void whenFieldIsInteger_returnsInteger() throws Exception {
+    public void givenIntegerValue_whenGetInt_returnsInteger() throws Exception {
         String jsonString = new JSONObject().put("fieldName", 5).toString();
         ObjectNode node = new JsonObjectNode(jsonString);
         assertEquals(new Integer(5), node.getInt("fieldName"));
+    }
+
+
+    @Test
+    public void givenNullBody_whenGetLong_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode(null);
+        assertNull(node.getLong("fieldName"));
+    }
+
+    @Test
+    public void givenJsonWithoutRequestedField_whenGetLong_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode("{}");
+        assertNull(node.getLong("fieldName"));
+    }
+
+    @Test
+    public void givenLongValue_whenGetLong_returnsLong() throws Exception {
+        String jsonString = new JSONObject().put("fieldName", Long.MAX_VALUE).toString();
+        ObjectNode node = new JsonObjectNode(jsonString);
+        assertEquals(Long.MAX_VALUE, (long) node.getLong("fieldName"));
+    }
+
+    @Test
+    public void givenNullBody_whenGetDouble_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode(null);
+        assertNull(node.getDouble("fieldName"));
+    }
+
+    @Test
+    public void givenJsonWithoutRequestedField_whenGetDouble_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode("{}");
+        assertNull(node.getDouble("fieldName"));
+    }
+
+    @Test
+    public void givenDoubleValue_whenGetDouble_returnsDouble() throws Exception {
+        String jsonString = new JSONObject().put("fieldName", 1.125).toString();
+        ObjectNode node = new JsonObjectNode(jsonString);
+        assertEquals(1.125, node.getDouble("fieldName"), 0.00001);
+    }
+
+    @Test
+    public void givenNullBody_whenGetBoolean_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode(null);
+        assertNull(node.getBoolean("fieldName"));
+    }
+
+    @Test
+    public void givenJsonWithoutRequestedField_whenGetBoolean_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode("{}");
+        assertNull(node.getBoolean("fieldName"));
+    }
+
+    @Test
+    public void givenBooleanValue_whenGetBoolean_returnsBoolean() throws Exception {
+        String jsonString = new JSONObject().put("fieldName", false).toString();
+        ObjectNode node = new JsonObjectNode(jsonString);
+        assertFalse(node.getBoolean("fieldName"));
+    }
+
+    @Test
+    public void givenNullBody_whenGetObjectNode_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode(null);
+        assertNull(node.getObjectNode("fieldName"));
+    }
+
+    @Test
+    public void givenJsonWithoutRequestedField_whenGetObjectNode_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode("{}");
+        assertNull(node.getObjectNode("fieldName"));
+    }
+
+    @Test
+    public void givenJsonObject_whenGetObjectNode_returnsObjectNode() throws Exception {
+        String jsonObject1 = new JSONObject().put("fieldName", "value").toString();
+        String jsonObject2 = new JSONObject().put("object", jsonObject1).toString();
+        ObjectNode node = new JsonObjectNode(jsonObject2);
+
+        assertEquals(new JsonObjectNode(jsonObject1), node.getObjectNode("object"));
     }
 }
