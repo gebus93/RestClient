@@ -6,7 +6,7 @@ public class JsonObjectNode implements ObjectNode {
     private final JSONObject jsonObject;
 
     public JsonObjectNode(String jsonString) {
-        this.jsonObject = isNotBlank(jsonString)
+        this.jsonObject = isEmpty(jsonString)
                 ? new JSONObject()
                 : new JSONObject(jsonString);
     }
@@ -60,7 +60,7 @@ public class JsonObjectNode implements ObjectNode {
                 : new JsonObjectNodeList(jsonObject.getJSONArray(fieldName).toString());
     }
 
-    private boolean isNotBlank(String jsonString) {
+    private boolean isEmpty(String jsonString) {
         return jsonString == null || jsonString.trim().isEmpty();
     }
 
