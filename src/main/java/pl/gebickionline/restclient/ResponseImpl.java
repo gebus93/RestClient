@@ -31,6 +31,15 @@ class ResponseImpl implements Response {
 
     @Override
     public ObjectNode asJsonObject() {
-        return new JsonObjectNode(asString());
+        return responseBody == null
+                ? null
+                : new JsonObjectNode(asString());
+    }
+
+    @Override
+    public ObjectNodeList asList() {
+        return responseBody == null
+                ? null
+                : new JsonObjectNodeList(asString());
     }
 }

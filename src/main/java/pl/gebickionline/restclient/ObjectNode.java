@@ -13,4 +13,6 @@ public interface ObjectNode {
     Boolean getBoolean(String fieldName);
 
     ObjectNode getObjectNode(String fieldName);
+
+    ObjectNodeList asList(String array);
 }

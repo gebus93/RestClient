@@ -12,13 +12,13 @@ public class ResponseImplTest {
     }
 
     @Test
-    public void givenNoBody_returnsEmptyString() throws Exception {
+    public void givenNullBody_returnsEmptyString() throws Exception {
         Response response = new ResponseImpl(200, null);
         assertEquals("", response.asString());
     }
 
     @Test
-    public void givenNoBody_returnsNullByteArray() throws Exception {
+    public void givenNullBody_returnsNullByteArray() throws Exception {
         Response response = new ResponseImpl(200, null);
         assertNull(response.asByteArray());
     }
@@ -30,9 +30,27 @@ public class ResponseImplTest {
     }
 
     @Test
-    public void givenJsonResponse_returnsJsonObject() throws Exception {
-        Response response = new ResponseImpl(200, "Response".getBytes());
+    public void givenNullBody_whenGetJsonObject_returnsNull() throws Exception {
+        Response response = new ResponseImpl(200, null);
+        assertNull(response.asJsonObject());
+    }
+
+    @Test
+    public void givenJsonResponse_returnsObjectNode() throws Exception {
+        Response response = new ResponseImpl(200, "{}".getBytes());
         ObjectNode jsonObject = response.asJsonObject();
         assertTrue(jsonObject instanceof JsonObjectNode);
+    }
+
+    @Test
+    public void givenNullBody_whenGetList_returnsNull() throws Exception {
+        Response response = new ResponseImpl(200, null);
+        assertNull(response.asList());
+    }
+
+    @Test
+    public void givenJsonListResponse_returnsObjectNodeList() throws Exception {
+        Response response = new ResponseImpl(200, "[]".getBytes());
+        assertTrue(response.asList() instanceof JsonObjectNodeList);
     }
 }

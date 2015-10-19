@@ -8,4 +8,6 @@ public interface Response {
     byte[] asByteArray();
 
     ObjectNode asJsonObject();
+
+    ObjectNodeList asList();
 }

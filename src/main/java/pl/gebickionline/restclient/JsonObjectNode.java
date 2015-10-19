@@ -53,6 +53,13 @@ public class JsonObjectNode implements ObjectNode {
                 : new JsonObjectNode(getString(fieldName));
     }
 
+    @Override
+    public ObjectNodeList asList(String fieldName) {
+        return jsonObject.isNull(fieldName)
+                ? null
+                : new JsonObjectNodeList(jsonObject.getJSONArray(fieldName).toString());
+    }
+
     private boolean isNotBlank(String jsonString) {
         return jsonString == null || jsonString.trim().isEmpty();
     }

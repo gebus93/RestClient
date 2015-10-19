@@ -1,7 +1,7 @@
 package pl.gebickionline.restclient;
 
 import org.junit.Test;
-import wiremock.org.json.JSONObject;
+import wiremock.org.json.*;
 
 import static org.junit.Assert.*;
 
@@ -124,5 +124,25 @@ public class JsonObjectNodeTest {
         ObjectNode node = new JsonObjectNode(jsonObject2);
 
         assertEquals(new JsonObjectNode(jsonObject1), node.getObjectNode("object"));
+    }
+
+
+    @Test
+    public void givenNullBody_whenGetList_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode(null);
+        assertNull(node.asList("array"));
+    }
+
+    @Test
+    public void givenEmptyBody_whenGetList_returnsNull() throws Exception {
+        ObjectNode node = new JsonObjectNode("   ");
+        assertNull(node.asList("array"));
+    }
+
+    @Test
+    public void givenJsonListResponse_returnsObjectNodeList() throws Exception {
+        String jsonObject = new JSONObject().put("array", new JSONArray()).toString();
+        JsonObjectNode node = new JsonObjectNode(jsonObject);
+        assertTrue(node.asList("array") instanceof JsonObjectNodeList);
     }
 }
