@@ -79,4 +79,9 @@ public class JsonObjectNode implements ObjectNode {
     public int hashCode() {
         return jsonObject != null ? jsonObject.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return jsonObject.toString();
+    }
 }

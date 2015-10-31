@@ -19,12 +19,41 @@ public class JsonObjectNodeList implements ObjectNodeList {
 
     @Override
     public List<String> asStringList() {
-        if (jsonArray.length() == 0)
-            return Collections.emptyList();
-
         List<String> list = new ArrayList<>();
         for (int i = 0, size = jsonArray.length(); i < size; i++)
             list.add(jsonArray.getString(i));
+        return list;
+    }
+
+    @Override
+    public List<Long> asLongList() {
+        List<Long> list = new ArrayList<>();
+        for (int i = 0, size = jsonArray.length(); i < size; i++)
+            list.add(jsonArray.getLong(i));
+        return list;
+    }
+
+    @Override
+    public List<Integer> asIntList() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0, size = jsonArray.length(); i < size; i++)
+            list.add(jsonArray.getInt(i));
+        return list;
+    }
+
+    @Override
+    public List<Double> asDoubleList() {
+        List<Double> list = new ArrayList<>();
+        for (int i = 0, size = jsonArray.length(); i < size; i++)
+            list.add(jsonArray.getDouble(i));
+        return list;
+    }
+
+    @Override
+    public List<ObjectNode> asObjectList() {
+        List<ObjectNode> list = new ArrayList<>();
+        for (int i = 0, size = jsonArray.length(); i < size; i++)
+            list.add(new JsonObjectNode(jsonArray.get(i).toString()));
         return list;
     }
 }
