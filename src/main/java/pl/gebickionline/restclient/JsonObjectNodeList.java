@@ -8,9 +8,15 @@ public class JsonObjectNodeList implements ObjectNodeList {
     private final JSONArray jsonArray;
 
     public JsonObjectNodeList(String jsonArray) {
-        this.jsonArray = isEmpty(jsonArray)
-                ? new JSONArray()
-                : new JSONArray(jsonArray);
+        if (isEmpty(jsonArray)) {
+            this.jsonArray = new JSONArray();
+            return;
+        }
+
+        if (jsonArray.trim().startsWith("{") && jsonArray.trim().endsWith("}"))
+            jsonArray = String.format("[%s]", jsonArray);
+
+        this.jsonArray = new JSONArray(jsonArray);
     }
 
     private boolean isEmpty(String jsonArray) {

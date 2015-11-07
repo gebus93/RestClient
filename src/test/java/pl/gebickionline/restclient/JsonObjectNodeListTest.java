@@ -129,4 +129,19 @@ public class JsonObjectNodeListTest {
 
         assertThat(nodeList.asObjectList(), hasItems(object1, object2));
     }
+
+    @Test
+    public void givenObject_whenGetObjectList_returnsListWithOneObject() throws Exception {
+
+        String body = new JSONObject()
+                .put("fieldName1", "value1")
+                .put("fieldName2", "value2")
+                .toString();
+
+        ObjectNodeList nodeList = new JsonObjectNodeList(body);
+        JsonObjectNode object = new JsonObjectNode("{\"fieldName1\":\"value1\", \"fieldName2\":\"value2\"}");
+
+        assertThat(nodeList.asObjectList(), hasItems(object));
+
+    }
 }
