@@ -19,6 +19,7 @@ public class JsonObjectNodeList implements ObjectNodeList {
         this.jsonArray = new JSONArray(jsonArray);
     }
 
+
     private boolean isEmpty(String jsonArray) {
         return jsonArray == null || jsonArray.trim().isEmpty();
     }
@@ -27,8 +28,36 @@ public class JsonObjectNodeList implements ObjectNodeList {
     public List<String> asStringList() {
         List<String> list = new ArrayList<>();
         for (int i = 0, size = jsonArray.length(); i < size; i++)
-            list.add(jsonArray.getString(i));
+            list.add(getString(i));
         return list;
+    }
+
+    private String getString(int i) {
+        if (isJsonObject(i))
+            return jsonArray.getJSONObject(i).toString();
+
+        if (isJsonArray(i))
+            return jsonArray.getJSONArray(i).toString();
+
+        return jsonArray.getString(i);
+    }
+
+    private boolean isJsonArray(int i) {
+        try {
+            jsonArray.getJSONArray(i);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isJsonObject(int i) {
+        try {
+            jsonArray.getJSONObject(i);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

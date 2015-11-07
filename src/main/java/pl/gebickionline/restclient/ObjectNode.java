@@ -14,5 +14,5 @@ public interface ObjectNode {
 
     ObjectNode getObjectNode(String fieldName);
 
-    ObjectNodeList asList(String array);
+    ObjectNodeList getList(String array);
 }

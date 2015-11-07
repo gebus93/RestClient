@@ -13,9 +13,34 @@ public class JsonObjectNode implements ObjectNode {
 
     @Override
     public String getString(String fieldName) {
-        return jsonObject.isNull(fieldName)
-                ? null
-                : jsonObject.getString(fieldName);
+        if (jsonObject.isNull(fieldName))
+            return null;
+
+        if (isJsonObject(fieldName))
+            return jsonObject.getJSONObject(fieldName).toString();
+
+        if (isJsonArray(fieldName))
+            return jsonObject.getJSONArray(fieldName).toString();
+
+        return jsonObject.getString(fieldName);
+    }
+
+    private boolean isJsonArray(String fieldName) {
+        try {
+            jsonObject.getJSONArray(fieldName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isJsonObject(String fieldName) {
+        try {
+            jsonObject.getJSONObject(fieldName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -54,7 +79,7 @@ public class JsonObjectNode implements ObjectNode {
     }
 
     @Override
-    public ObjectNodeList asList(String fieldName) {
+    public ObjectNodeList getList(String fieldName) {
         return jsonObject.isNull(fieldName)
                 ? null
                 : new JsonObjectNodeList(jsonObject.getJSONArray(fieldName).toString());

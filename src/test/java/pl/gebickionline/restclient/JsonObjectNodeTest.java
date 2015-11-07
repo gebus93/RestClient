@@ -130,19 +130,40 @@ public class JsonObjectNodeTest {
     @Test
     public void givenNullBody_whenGetList_returnsNull() throws Exception {
         ObjectNode node = new JsonObjectNode(null);
-        assertNull(node.asList("array"));
+        assertNull(node.getList("array"));
     }
 
     @Test
     public void givenEmptyBody_whenGetList_returnsNull() throws Exception {
         ObjectNode node = new JsonObjectNode("   ");
-        assertNull(node.asList("array"));
+        assertNull(node.getList("array"));
     }
 
     @Test
     public void givenJsonListResponse_returnsObjectNodeList() throws Exception {
         String jsonObject = new JSONObject().put("array", new JSONArray()).toString();
         JsonObjectNode node = new JsonObjectNode(jsonObject);
-        assertTrue(node.asList("array") instanceof JsonObjectNodeList);
+        assertTrue(node.getList("array") instanceof JsonObjectNodeList);
+    }
+
+    @Test
+    public void givenJsonObject_whenGetString_returnsString() throws Exception {
+        String jsonString = new JSONObject()
+                .put("fieldName", new JSONObject()
+                        .put("fieldName2", "value"))
+                .toString();
+        ObjectNode node = new JsonObjectNode(jsonString);
+
+        assertEquals("{\"fieldName2\":\"value\"}", node.getString("fieldName"));
+    }
+
+    @Test
+    public void givenJsonArray_whenGetString_returnsString() throws Exception {
+        String jsonString = new JSONObject()
+                .put("fieldName", new JSONArray().put(0, "value"))
+                .toString();
+        ObjectNode node = new JsonObjectNode(jsonString);
+
+        assertEquals("[\"value\"]", node.getString("fieldName"));
     }
 }

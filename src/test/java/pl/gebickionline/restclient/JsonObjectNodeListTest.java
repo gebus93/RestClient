@@ -144,4 +144,18 @@ public class JsonObjectNodeListTest {
         assertThat(nodeList.asObjectList(), hasItems(object));
 
     }
+
+    @Test
+    public void givenObjectList_whenGetStringList_returnsStringList() throws Exception {
+        String body = new JSONArray()
+                .put(0, new JSONObject().put("fieldName1", "value1"))
+                .put(1, new JSONObject().put("fieldName2", "value2"))
+                .toString();
+
+        ObjectNodeList nodeList = new JsonObjectNodeList(body);
+        String object1 = new JsonObjectNode("{\"fieldName1\":\"value1\"}").toString();
+        String object2 = new JsonObjectNode("{\"fieldName2\":\"value2\"}").toString();
+
+        assertThat(nodeList.asStringList(), hasItems(object1, object2));
+    }
 }
