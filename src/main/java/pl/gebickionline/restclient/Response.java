@@ -10,4 +10,6 @@ public interface Response {
     ObjectNode asJsonObject();
 
     ObjectNodeList asList();
+
+    String header(String key);
 }

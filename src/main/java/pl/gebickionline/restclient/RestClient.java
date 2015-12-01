@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RestClient {
     public static final String CHARSET_NAME = "UTF-8";
@@ -57,7 +58,18 @@ public class RestClient {
         HttpResponse response = executeRequest();
         int statusCode = response.getStatusLine().getStatusCode();
         byte[] responseBody = responseBodyOf(response.getEntity());
-        return new ResponseImpl(statusCode, responseBody);
+
+        Map<String, String> headers = listOf(response.getAllHeaders())
+                .stream()
+                .collect(Collectors.toMap(Header::getName, Header::getValue));
+
+        return new ResponseImpl(headers, statusCode, responseBody);
+    }
+
+    private List<Header> listOf(Header[] allHeaders) {
+        if (allHeaders == null)
+            return Collections.emptyList();
+        return Arrays.asList(allHeaders);
     }
 
     private byte[] responseBodyOf(HttpEntity entity) {
