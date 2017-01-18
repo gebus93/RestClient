@@ -61,7 +61,7 @@ public class RestClient {
 
         Map<String, String> headers = listOf(response.getAllHeaders())
                 .stream()
-                .collect(Collectors.toMap(Header::getName, Header::getValue));
+                .collect(Collectors.toMap(Header::getName, Header::getValue, String::concat));
 
         return new ResponseImpl(headers, statusCode, responseBody);
     }
