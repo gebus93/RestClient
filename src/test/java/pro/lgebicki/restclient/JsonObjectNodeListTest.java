@@ -1,7 +1,9 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient;
 
+import org.hamcrest.CoreMatchers;
 import org.json.*;
 import org.junit.Test;
+import pro.lgebicki.restclient.api.ObjectNodeList;
 
 import java.util.*;
 
@@ -11,19 +13,19 @@ import static org.junit.Assert.*;
 
 public class JsonObjectNodeListTest {
     @Test
-    public void givenNullBody_whenGetStringList_returnsEmptyList() throws Exception {
+    public void givenNullBody_whenGetStringList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList(null);
         assertEquals(Collections.emptyList(), nodeList.asStringList());
     }
 
     @Test
-    public void givenEmptyBody_whenGetStringList_returnsEmptyList() throws Exception {
+    public void givenEmptyBody_whenGetStringList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList("    ");
         assertEquals(Collections.emptyList(), nodeList.asStringList());
     }
 
     @Test
-    public void whenGetStringList_returnsStringList() throws Exception {
+    public void whenGetStringList_returnsStringList() {
         String body = new JSONArray()
                 .put(0, "value1")
                 .put(1, "value2")
@@ -36,19 +38,19 @@ public class JsonObjectNodeListTest {
     }
 
     @Test
-    public void givenNullBody_whenGetLongList_returnsEmptyList() throws Exception {
+    public void givenNullBody_whenGetLongList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList(null);
         assertEquals(Collections.emptyList(), nodeList.asLongList());
     }
 
     @Test
-    public void givenEmptyBody_whenGetLongList_returnsEmptyList() throws Exception {
+    public void givenEmptyBody_whenGetLongList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList("    ");
         assertEquals(Collections.emptyList(), nodeList.asLongList());
     }
 
     @Test
-    public void whenGetLongList_returnsLongList() throws Exception {
+    public void whenGetLongList_returnsLongList() {
         String body = new JSONArray()
                 .put(0, 15)
                 .put(1, 32)
@@ -59,19 +61,19 @@ public class JsonObjectNodeListTest {
     }
 
     @Test
-    public void givenNullBody_whenGetIntList_returnsEmptyList() throws Exception {
+    public void givenNullBody_whenGetIntList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList(null);
         assertEquals(Collections.emptyList(), nodeList.asIntList());
     }
 
     @Test
-    public void givenEmptyBody_whenGetIntList_returnsEmptyList() throws Exception {
+    public void givenEmptyBody_whenGetIntList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList("    ");
         assertEquals(Collections.emptyList(), nodeList.asIntList());
     }
 
     @Test
-    public void whenGetIntList_returnsIntList() throws Exception {
+    public void whenGetIntList_returnsIntList() {
         String body = new JSONArray()
                 .put(0, 15)
                 .put(1, 32)
@@ -82,19 +84,19 @@ public class JsonObjectNodeListTest {
     }
 
     @Test
-    public void givenNullBody_whenGetDoubleList_returnsEmptyList() throws Exception {
+    public void givenNullBody_whenGetDoubleList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList(null);
         assertEquals(Collections.emptyList(), nodeList.asDoubleList());
     }
 
     @Test
-    public void givenEmptyBody_whenGetDoubleList_returnsEmptyList() throws Exception {
+    public void givenEmptyBody_whenGetDoubleList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList("    ");
         assertEquals(Collections.emptyList(), nodeList.asDoubleList());
     }
 
     @Test
-    public void whenGetDoubleList_returnsDoubleList() throws Exception {
+    public void whenGetDoubleList_returnsDoubleList() {
         String body = new JSONArray()
                 .put(0, 15.345)
                 .put(1, 32.865)
@@ -105,19 +107,19 @@ public class JsonObjectNodeListTest {
     }
 
     @Test
-    public void givenNullBody_whenGetObjectList_returnsEmptyList() throws Exception {
+    public void givenNullBody_whenGetObjectList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList(null);
         assertEquals(Collections.emptyList(), nodeList.asObjectList());
     }
 
     @Test
-    public void givenEmptyBody_whenGetObjectList_returnsEmptyList() throws Exception {
+    public void givenEmptyBody_whenGetObjectList_returnsEmptyList() {
         ObjectNodeList nodeList = new JsonObjectNodeList("    ");
         assertEquals(Collections.emptyList(), nodeList.asObjectList());
     }
 
     @Test
-    public void whenGetObjectList_returnsObjectList() throws Exception {
+    public void whenGetObjectList_returnsObjectList() {
         String body = new JSONArray()
                 .put(0, new JSONObject().put("fieldName1", "value1"))
                 .put(1, new JSONObject().put("fieldName2", "value2"))
@@ -127,11 +129,11 @@ public class JsonObjectNodeListTest {
         JsonObjectNode object1 = new JsonObjectNode("{\"fieldName1\":\"value1\"}");
         JsonObjectNode object2 = new JsonObjectNode("{\"fieldName2\":\"value2\"}");
 
-        assertThat(nodeList.asObjectList(), hasItems(object1, object2));
+        assertThat(nodeList.asObjectList(), CoreMatchers.hasItems(object1, object2));
     }
 
     @Test
-    public void givenObject_whenGetObjectList_returnsListWithOneObject() throws Exception {
+    public void givenObject_whenGetObjectList_returnsListWithOneObject() {
 
         String body = new JSONObject()
                 .put("fieldName1", "value1")
@@ -141,12 +143,12 @@ public class JsonObjectNodeListTest {
         ObjectNodeList nodeList = new JsonObjectNodeList(body);
         JsonObjectNode object = new JsonObjectNode("{\"fieldName1\":\"value1\", \"fieldName2\":\"value2\"}");
 
-        assertThat(nodeList.asObjectList(), hasItems(object));
+        assertThat(nodeList.asObjectList(), CoreMatchers.hasItems(object));
 
     }
 
     @Test
-    public void givenObjectList_whenGetStringList_returnsStringList() throws Exception {
+    public void givenObjectList_whenGetStringList_returnsStringList() {
         String body = new JSONArray()
                 .put(0, new JSONObject().put("fieldName1", "value1"))
                 .put(1, new JSONObject().put("fieldName2", "value2"))

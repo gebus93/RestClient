@@ -1,4 +1,4 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient.api;
 
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
@@ -6,13 +6,17 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import pro.lgebicki.restclient.ExecuteRequestException;
+import pro.lgebicki.restclient.HttpDelete;
+import pro.lgebicki.restclient.ResponseConversionException;
+import pro.lgebicki.restclient.ResponseImpl;
 
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class RestClient {
-    public static final String CHARSET_NAME = "UTF-8";
+    private static final String CHARSET_NAME = "UTF-8";
     private final HttpRequestBase request;
     private byte[] body;
     private Map<String, String> headers;
@@ -83,8 +87,7 @@ public class RestClient {
     }
 
     private HttpResponse executeRequest() {
-        headers.entrySet()
-                .forEach(header -> request.addHeader(header.getKey(), header.getValue()));
+        headers.forEach(request::addHeader);
 
         if (body != null)
             addBodyToRequest();

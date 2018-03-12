@@ -1,4 +1,4 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient.api;
 
 
 public interface ObjectNode {

@@ -1,13 +1,15 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient;
 
 import org.json.JSONArray;
+import pro.lgebicki.restclient.api.ObjectNode;
+import pro.lgebicki.restclient.api.ObjectNodeList;
 
 import java.util.*;
 
 public class JsonObjectNodeList implements ObjectNodeList {
     private final JSONArray jsonArray;
 
-    public JsonObjectNodeList(String jsonArray) {
+    JsonObjectNodeList(String jsonArray) {
         if (isEmpty(jsonArray)) {
             this.jsonArray = new JSONArray();
             return;

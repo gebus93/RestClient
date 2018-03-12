@@ -1,19 +1,20 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient;
 
 import org.junit.Test;
+import pro.lgebicki.restclient.api.ObjectNode;
 import wiremock.org.json.*;
 
 import static org.junit.Assert.*;
 
 public class JsonObjectNodeTest {
     @Test
-    public void givenNullBody_whenGetString_returnsNull() throws Exception {
+    public void givenNullBody_whenGetString_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getString("fieldName"));
     }
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetString_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetString_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getString("fieldName"));
     }
@@ -28,14 +29,14 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void givenNullBody_whenGetInt_returnsNull() throws Exception {
+    public void givenNullBody_whenGetInt_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getInt("fieldName"));
     }
 
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetInt_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetInt_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getInt("fieldName"));
     }
@@ -44,18 +45,18 @@ public class JsonObjectNodeTest {
     public void givenIntegerValue_whenGetInt_returnsInteger() throws Exception {
         String jsonString = new JSONObject().put("fieldName", 5).toString();
         ObjectNode node = new JsonObjectNode(jsonString);
-        assertEquals(new Integer(5), node.getInt("fieldName"));
+        assertEquals(Integer.valueOf(5), node.getInt("fieldName"));
     }
 
 
     @Test
-    public void givenNullBody_whenGetLong_returnsNull() throws Exception {
+    public void givenNullBody_whenGetLong_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getLong("fieldName"));
     }
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetLong_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetLong_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getLong("fieldName"));
     }
@@ -68,13 +69,13 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void givenNullBody_whenGetDouble_returnsNull() throws Exception {
+    public void givenNullBody_whenGetDouble_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getDouble("fieldName"));
     }
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetDouble_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetDouble_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getDouble("fieldName"));
     }
@@ -87,13 +88,13 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void givenNullBody_whenGetBoolean_returnsNull() throws Exception {
+    public void givenNullBody_whenGetBoolean_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getBoolean("fieldName"));
     }
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetBoolean_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetBoolean_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getBoolean("fieldName"));
     }
@@ -106,13 +107,13 @@ public class JsonObjectNodeTest {
     }
 
     @Test
-    public void givenNullBody_whenGetObjectNode_returnsNull() throws Exception {
+    public void givenNullBody_whenGetObjectNode_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getObjectNode("fieldName"));
     }
 
     @Test
-    public void givenJsonWithoutRequestedField_whenGetObjectNode_returnsNull() throws Exception {
+    public void givenJsonWithoutRequestedField_whenGetObjectNode_returnsNull() {
         ObjectNode node = new JsonObjectNode("{}");
         assertNull(node.getObjectNode("fieldName"));
     }
@@ -128,13 +129,13 @@ public class JsonObjectNodeTest {
 
 
     @Test
-    public void givenNullBody_whenGetList_returnsNull() throws Exception {
+    public void givenNullBody_whenGetList_returnsNull() {
         ObjectNode node = new JsonObjectNode(null);
         assertNull(node.getList("array"));
     }
 
     @Test
-    public void givenEmptyBody_whenGetList_returnsNull() throws Exception {
+    public void givenEmptyBody_whenGetList_returnsNull() {
         ObjectNode node = new JsonObjectNode("   ");
         assertNull(node.getList("array"));
     }

@@ -1,10 +1,14 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient;
+
+import pro.lgebicki.restclient.api.ObjectNode;
+import pro.lgebicki.restclient.api.ObjectNodeList;
+import pro.lgebicki.restclient.api.Response;
 
 import java.nio.charset.Charset;
 import java.util.Map;
 
-class ResponseImpl implements Response {
-    public static final String CHARSET_NAME = "UTF-8";
+public class ResponseImpl implements Response {
+    private static final String CHARSET_NAME = "UTF-8";
     private Map<String, String> headers;
     private final int statusCode;
     private final byte[] responseBody;

@@ -1,11 +1,13 @@
-package pl.gebickionline.restclient;
+package pro.lgebicki.restclient;
 
 import org.json.JSONObject;
+import pro.lgebicki.restclient.api.ObjectNode;
+import pro.lgebicki.restclient.api.ObjectNodeList;
 
 public class JsonObjectNode implements ObjectNode {
     private final JSONObject jsonObject;
 
-    public JsonObjectNode(String jsonString) {
+    JsonObjectNode(String jsonString) {
         this.jsonObject = isEmpty(jsonString)
                 ? new JSONObject()
                 : new JSONObject(jsonString);
